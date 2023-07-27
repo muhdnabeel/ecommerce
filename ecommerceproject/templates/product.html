@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+  {{ product.description | truncatewords:150 }}
+{% endblock %}
+{% block title %}
+  {{ product.name }} - Shopify
+{% endblock %}
+
+{% block content %}
+<div class="row my_prod_row_class" style="padding-top:15px;">
+  <div class="mx_auto" style="color:black;font-size:20px;text-decoration:none;font-family: 'Poppins', sans-serif;font-weight:bold;letter-spacing:.05em;">
+    <p><a href="{% url 'ecommerceapp:allProCat' %}">Home</a> | <a href="{{product.category.get_url}}">{{product.category}}</a> | {{product.name}}</p>
+  </div>
+</div>
+<div class="container">
+<br>
+  <div class="row" >
+  <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+    <div class="min-width:18rem">
+      <img src="{{product.image.url}}" alt="{{product.name}}" style="width:300px;height:300px;">
+    </div>
+  </div>
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+      <div>
+      <h1 class="my_prod_title" style="font-size: 30px;padding-top: 40px;text-transform:uppercase;letter-spacing:.05em;">{{product.name}}</h1>
+      <p style="font-size:20px;">${{product.price}}</p>
+      <p style="font-weight:bold;font-size:20px;"><u>Product Description</u></p>
+      <p class="text-justify" >{{product.description}}</p>
+      {% if product.stock <= 0 %}
+        <p class="text-justify" style="font-weight:bold;font-size:20px;"><b>Out Of Stock</b></p>
+      {% else %}
+        <br>
+        <a href="{% url 'cart_app:add_cart' product.id %}" class="btn btn-secondary">Add To Cart</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+  </div>
+{% endblock %}
+
